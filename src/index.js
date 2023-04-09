@@ -1,17 +1,52 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Shower from './shower'
+import LeftBar from './leftBar'
+import Prompt from './prompt'
+import './styles/globals.css'
+import { useEffect } from 'react';
+import { get } from './Effectok/hooks';
+import { useEffectok } from './Effectok/hooks';
+import store from './store';
+
+
+function App() {
+
+  let that = useEffectok('app', class{
+    clickType = ''
+    constructor(){
+      document.addEventListener('click', this.handleClick);
+    }
+    handleClick(event) {
+      if(that.clickType != "leftBarLi"){
+        let old = get('leftBar').curLi;
+        get('leftBar').curLi = null;
+        if(old){
+          old.reName();
+          old.flush();
+        }
+      }
+      that.clickType = '';
+    }
+  });
+
+  return (
+    <div className="App" style={{
+      display: `flex`,
+      flexDirection: `column`,
+      justifyContent: `space-between`,
+      alignItems: `center`,
+      minHeight: `100vh`,
+      paddingLeft: `16vw`,
+    }}>
+        <LeftBar/>
+        <Shower/>
+        <Prompt/> 
+    </div>
+  );
+}
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+root.render(<App/>);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
