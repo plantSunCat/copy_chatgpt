@@ -11,7 +11,7 @@
     "remark-gfm": "^3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=80 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test"
   },
