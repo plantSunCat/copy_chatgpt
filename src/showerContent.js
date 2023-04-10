@@ -6,7 +6,7 @@ export default function ShowerContent({role, content}){
         <div style={{
             width: `100%`, height: `auto`, overflow: `hidden`,
             padding: `16px 18vw 16px 18vw`,
-            background: role == 'user' ? '#ffffcc' : '#ffccff'
+            background: role === 'user' ? '#ffffcc' : '#ffccff'
         }}>
         <Markdown content={content}/>
         </div>

@@ -25,8 +25,8 @@ class Store {
     constructor(){
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
-            if(key == 'ally-supports-cache') continue;
-            if(key == 'lastListId'){
+            if(key === 'ally-supports-cache') continue;
+            if(key === 'lastListId'){
                 this.curListId = localStorage.getItem(key);
                 this.changed.add(this.curListId);
             }
@@ -58,17 +58,17 @@ class Store {
     }
     addUserMessage(message){
         let curList;
-        console.log("curListId == " + this.curListId)
-        if(this.curListId == ''){
-            console.log("222222222222")
+        // console.log("curListId == " + this.curListId)
+        if(this.curListId === ''){
+            // console.log("222222222222")
             this.curListId = getId();
             curList = [];
             this.map.set(this.curListId, curList);
         } else {
-            console.log("1111111111");
+            // console.log("1111111111");
             curList = this.getCurList();
         }
-        console.log(curList);
+        // console.log(curList);
         curList.push({role: 'user', content: message});
 
         this.save(this.curListId, curList);
@@ -78,18 +78,18 @@ class Store {
     }
     addAassistant(message){
         let curList = this.getCurList();
-        console.log(curList)
+        //console.log(curList)
         curList.push({role: 'assistant', content: message});
         this.save(this.curListId, curList);
         flush('shower');
     }
 
     reName(id, newId){
-        if(id == newId) return;
+        if(id === newId) return;
         this.save(newId, this.get(id));
         this.delete(id)
-        if(this.curListId == id){
-            this.curListId == newId;
+        if(this.curListId === id){
+            this.curListId = newId;
         }
         flush('leftBar');
     }

@@ -1,10 +1,12 @@
 
 
+
+
 const chatgpt = {
-    host: 'https://api.openai.com/',
-    //host: 'https://mychat-3v9.pages.dev/',
+    // host: 'https://api.openai.com/',
+    host: 'https://mychat-3v9.pages.dev/',
     headers: {
-        'authorization': 'Bearer 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',
+        'authorization': 'Bearer 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',
         'Content-Type': 'application/json'
     },
     async ask(uri, body){
@@ -12,13 +14,14 @@ const chatgpt = {
             const response = await fetch(this.host + uri, {
               method: 'POST',
               headers: this.headers,
-              body: JSON.stringify(body)
+              body: JSON.stringify(body),
+              redirect: 'follow'
             });
             if (!response.ok) {
               throw new Error(`Error! status: ${response.status}`);
             }
             const result = await response.json();
-            console.log('result is: ', JSON.stringify(result, null, 4));
+            //console.log('result is: ', JSON.stringify(result, null, 4));
             return result;
           } catch (err) {
             console.log(err.message);
@@ -32,7 +35,7 @@ const chatgpt = {
         messages: messages,
       });
       let ret = result.choices[0].message.content;
-      console.log(ret);
+      // console.log(ret);
       return ret;
     },
 
@@ -62,14 +65,14 @@ const chatgpt = {
             temperature: 0
         });
         let ret = result.choices[0].text;
-        console.log(ret);
+        // console.log(ret);
         return ret;
     },
 
     //配置的相关api
     async models(){
         let result = await this.ask('v1/models/text-davinci-003',{});
-        console.log(result);
+        // console.log(result);
     },
 }
 

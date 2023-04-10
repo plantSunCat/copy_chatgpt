@@ -14,7 +14,7 @@ export default function LeftBarLi(props) {
           if(!has("leftBar")){
             return false;
           }else{
-            return get("leftBar").curLi == that;
+            return get("leftBar").curLi === that;
           }
         }
         curEnter = 'linear-gradient(to top, #ffffff, #449d44)'
@@ -24,7 +24,7 @@ export default function LeftBarLi(props) {
 
         reName(){
           let newName = ref.current.value;
-          if(newName == that.id) return;
+          if(newName === that.id) return;
           while(store.map.has(newName)){
             newName += getId();
           }

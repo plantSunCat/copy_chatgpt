@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
-import { useEffectok, flush, get } from './Effectok/hooks';
+import {useRef} from 'react'
+import {get, useEffectok} from './Effectok/hooks';
 import chatgpt from './Effectok/chatgpt'
 import store from './store';
 
@@ -9,7 +9,7 @@ function prompt() {
         promptButtonClick = async () => {
             let shower = get("shower");
             let question = inputRef.current?.value;
-            if(question.length == 0) return;
+            if(question.length === 0) return;
             store.addUserMessage(question);
             chatgpt.contextChat(shower.list().slice(-20)).then(answer =>{
                 store.addAassistant(answer);
@@ -20,12 +20,11 @@ function prompt() {
             let question = inputRef.current?.value;
             this.rows = (question.match(/\n/g) || []).length + 1;
             this.height = Math.min(that.rows, 5) * that.fontSize * this.lineFontRate + 20;
-            if(Math.abs(this.rows - oldRows) == 1){
-                const scrollDistance = event.target.scrollHeight - event.target.clientHeight;
-                event.target.scrollTop = scrollDistance;
+            if(Math.abs(this.rows - oldRows) === 1){
+                event.target.scrollTop = event.target.scrollHeight - event.target.clientHeight;
             }
             
-            if(oldRows != this.rows){
+            if(oldRows !== this.rows){
                 that.flush();
             }              
         }

@@ -18,7 +18,7 @@ function App() {
       document.addEventListener('click', this.handleClick);
     }
     handleClick(event) {
-      if(that.clickType != "leftBarLi"){
+      if(that.clickType !== "leftBarLi"){
         let old = get('leftBar').curLi;
         get('leftBar').curLi = null;
         if(old){
