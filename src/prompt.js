@@ -1,6 +1,6 @@
 import {useRef} from 'react'
 import {get, useEffectok} from './Effectok/hooks';
-import chatgpt from './Effectok/chatgpt'
+import chatgpt from './chatgpt'
 import store from './store';
 
 function prompt() {

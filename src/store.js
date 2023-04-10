@@ -26,33 +26,30 @@ class Store {
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             if(key === 'ally-supports-cache') continue;
-            if(key === 'lastListId'){
-                this.curListId = localStorage.getItem(key);
-                this.changed.add(this.curListId);
+            if(key.startsWith(this.prefix)){
+                this.map.set(key.replace(this.prefix, ''), this.get(key));
             }
-            this.map.set(key, this.get(key));
         }
     }
+    prefix = 'leftBarLi: ';
     map = new Map([])
     curListId = ''
     deleteList(listId){
         this.map.delete(listId);
-        this.delete(listId);
+        this.delete(this.prefix + listId);
     }
     getCurList(){
-        // console.log('getCurList() == ' + this.curListId)
-        return this.map.get(this.curListId);  
+        return this.map.get(this.curListId);
     }
     setCurList(listId){
         this.curListId = listId
-        // console.log("setCurList == " + this.curListId)
     }
     addList(){
         let id = getId();
         this.curListId = id;
         let array = [];
         this.map.set(id, array)
-        this.save(id, []);
+        this.save(this.prefix + id.toString(), []);
         flush('leftBar');
         flush(`shower`);
     }
@@ -71,7 +68,7 @@ class Store {
         // console.log(curList);
         curList.push({role: 'user', content: message});
 
-        this.save(this.curListId, curList);
+        this.save(this.prefix + this.curListId, curList);
 
         flush('shower');
         flush('leftBar');
@@ -80,14 +77,14 @@ class Store {
         let curList = this.getCurList();
         //console.log(curList)
         curList.push({role: 'assistant', content: message});
-        this.save(this.curListId, curList);
+        this.save(this.prefix + this.curListId, curList);
         flush('shower');
     }
 
     reName(id, newId){
         if(id === newId) return;
-        this.save(newId, this.get(id));
-        this.delete(id)
+        this.save(this.prefix + newId, this.get(this.prefix + id));
+        this.delete(this.prefix + id)
         if(this.curListId === id){
             this.curListId = newId;
         }

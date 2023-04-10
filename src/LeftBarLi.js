@@ -70,7 +70,7 @@ export default function LeftBarLi(props) {
     }} onClick={(e)=>{
       store.deleteList(that.id);
       flush('leftBar');
-      if(that.id == store.curListId){
+      if(that.id === store.curListId){
           store.curListId = '';
           flush('shower');
       }

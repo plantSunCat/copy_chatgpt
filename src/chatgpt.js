@@ -1,19 +1,19 @@
-
+import { useEffectok, Flush, get } from './Effectok/hooks';
 
 
 
 const chatgpt = {
-    // host: 'https://api.openai.com/',
-    host: 'https://mychat-3v9.pages.dev/',
-    headers: {
-        'authorization': 'Bearer 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',
-        'Content-Type': 'application/json'
-    },
+    //host mychat-3v9.pages.dev
+    //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
+
     async ask(uri, body){
         try {
-            const response = await fetch(this.host + uri, {
+            const response = await fetch('https://' + get("leftBar").host + '/' + uri, {
               method: 'POST',
-              headers: this.headers,
+              headers: {
+                  'authorization': 'Bearer ' + get("leftBar").apikey,
+                  'Content-Type': 'application/json'
+              },
               body: JSON.stringify(body),
               redirect: 'follow'
             });
